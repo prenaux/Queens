@@ -24,7 +24,7 @@ stdmodule {
     }
 }
 
-task execute(type:JavaExec) {
+task run(type:JavaExec) {
     main = 'Main'
     classpath = sourceSets.main.runtimeClasspath
 }
