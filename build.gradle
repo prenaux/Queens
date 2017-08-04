@@ -18,6 +18,10 @@ stdmodule {
     description "Queens puzzle"
     author id: 'prenaux', name: 'Pierre Renaux', email: 'pierre@talansoft.com'
     license 'Apache-2.0'
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.+'
+    }
 }
 
 task execute(type:JavaExec) {
