@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.4'
+    }
+}
+
+apply plugin: 'org.anarres.stdproject'
+stdproject {
+}
+
+apply plugin: 'org.anarres.stdmodule'
+group = 'io.github.prenaux'
+stdmodule {
+    description "Queens puzzle"
+    author id: 'prenaux', name: 'Pierre Renaux', email: 'pierre@talansoft.com'
+    license 'Apache-2.0'
+}
+
+task execute(type:JavaExec) {
+    main = 'Main'
+    classpath = sourceSets.main.runtimeClasspath
+}
