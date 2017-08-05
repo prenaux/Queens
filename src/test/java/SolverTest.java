@@ -5,7 +5,10 @@ import static org.junit.Assert.*;
 
 public class SolverTest {
     final String solver4_starting = " .; .; .; .; .; .; .; .; .; .; .; .; .; .; .; .;";
-    final String solver4_solution = " .; .; Q; .; Q; .; .; .; .; .; .; Q; .; Q; .; .;";
+    final String solver4_solutions[] = {
+            " .; .; Q; .; Q; .; .; .; .; .; .; Q; .; Q; .; .;",
+            " .; Q; .; .; .; .; .; Q; Q; .; .; .; .; .; Q; .;"
+    };
 
     @Test
     public void solve4Start() {
@@ -19,7 +22,7 @@ public class SolverTest {
         final Solver solver4 = new Solver(4);
         solver4.solve();
         System.out.println(solver4.toString(true));
-        assertEquals(solver4_solution, solver4.toString(false));
+        assertEquals(solver4_solutions[0], solver4.toString(false));
         assertEquals(24, solver4.getTotalIt());
     }
 
@@ -28,13 +31,13 @@ public class SolverTest {
         final Solver solver4 = new Solver(4);
         int numSolutions = 0;
         while (solver4.solve()) {
-            System.out.println("# Solution " + (numSolutions+1) + "\n" + solver4.toString(true));
-            assertEquals(solver4_solution, solver4.toString(false));
+            System.out.println("# Solution " + (numSolutions + 1) + "\n" + solver4.toString(true));
+            assertEquals(solver4_solutions[numSolutions], solver4.toString(false));
             ++numSolutions;
         }
         System.out.println("# Num solutions: " + numSolutions);
-        assertEquals(36, solver4.getTotalIt());
-        assertEquals(1, numSolutions);
+        assertEquals(56, solver4.getTotalIt());
+        assertEquals(2, numSolutions);
         assertEquals(solver4_starting, solver4.toString(false));
     }
 }
