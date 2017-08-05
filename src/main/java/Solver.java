@@ -8,4 +8,10 @@ public class Solver {
     public int getN() {
         return N;
     }
+
+    public boolean solve() {
+        return true;
+    }
+
+
 }
