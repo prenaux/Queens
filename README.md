@@ -21,6 +21,39 @@ concurrent implementation actually does something useful.
 
 All run on macOS, best of 3 runs.
 
+### N = 16
+
+```
+> i7 3930K @ 4Ghz, 6cores
+# Using 12 threads.
+Solving for N = 16
+# Num solutions: 14772512
+Total time: 34.324 secs
+```
+
+### N = 15
+
+```
+> i7 3930K @ 4Ghz, 6cores
+# Using 1 threads.
+Solving for N = 15
+# Num solutions: 2279184
+Total time: 28.617 secs
+```
+
+```
+> i7 3930K @ 4Ghz, 6cores
+# Using 12 threads.
+Solving for N = 15
+# Num solutions: 2279184
+Total time: 5.829 secs
+```
+
+### N = 14
+
+Note that this is run with the inital version which was still formatting the
+solutions to a string.
+
 ```
 > MBA 2.2Ghz i7, 2 cores
 # Using 1 threads.
