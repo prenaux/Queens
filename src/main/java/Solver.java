@@ -7,8 +7,9 @@ public class Solver {
         board = new Board(aN);
         this.queens = new Queen[aN];
         for (int c = 0; c < aN; ++c) {
-            queens[c] = new Queen(board,-1, c);
+            queens[c] = new Queen(board, -1, c);
         }
+        resetSolver();
     }
 
     public Board getBoard() {
@@ -19,6 +20,37 @@ public class Solver {
         return board.getN();
     }
 
+    private int currentQI;
+    private int currentRow;
+    private int totalIt;
+
+    /**
+     * Reset the solver to restart from the beginning.
+     */
+    public void resetSolver(int r) {
+        totalIt = 0;
+        startRow(r);
+    }
+    public void resetSolver() {
+        resetSolver(0);
+    }
+
+    public void startRow(int r) {
+        currentRow = r;
+        currentQI = 1;
+        for (Queen q : queens) {
+            q.moveToRow(-1);
+        }
+        queens[0].moveToRow(currentRow);
+    }
+
+    /**
+     * Get the number of iterations performed by the solver so far.
+     * An iteration is defined as one 'hasCollision' check.
+     */
+    public int getTotalIt() {
+        return totalIt;
+    }
 
     /**
      * Returns true if this queens collide with any queen in aQueens in the
@@ -29,7 +61,7 @@ public class Solver {
         assert (aTo <= (queens.length - 1));
         for (int i = aFrom; i <= aTo; ++i) {
             Queen q = queens[i];
-            assert(!aQ.equals(q));
+            assert (!aQ.equals(q));
             if (aQ.collidesWithIgnoreColumn(q)) {
                 return true;
             }
@@ -39,56 +71,23 @@ public class Solver {
 
     public boolean moveQueenToFreeRow(Queen q, int startRow) {
         final int lastColToCheck = q.getC() - 1;
-        if (lastColToCheck < 0) {
-            if (startRow >= getN()) {
-                q.moveToRow(-1);
-                return false;
-            }
-            else {
-                q.moveToRow(startRow);
+        assert (lastColToCheck >= 0);
+        // TODO: Here we could skip at least 3 collision check by checking the immediate left column directly first.
+        for (int r = startRow; r < getN(); ++r) {
+            q.moveToRow(r);
+            ++totalIt;
+            if (!hasCollision(q, 0, lastColToCheck)) {
                 return true;
-            }
-        }
-        else {
-            for (int r = startRow; r < getN(); ++r) {
-                q.moveToRow(r);
-                ++totalIt;
-                if (!hasCollision(q, 0, lastColToCheck)) {
-                    return true;
-                }
             }
         }
         return false;
     }
 
-    private int currentQI = 0;
-
-    /**
-     * Reset the solver to restart from the begining.
-     */
-    public void resetSolver() {
-        currentQI = 0;
-        totalIt = 0;
-        for (Queen q : queens) {
-            q.moveToRow(-1);
-        }
-    }
-
-    private int totalIt = 0;
-
-    /**
-     * Get the number of iterations performed by the solver so far.
-     * An iteration is defined as one 'hasCollision' check.
-     */
-    public int getTotalIt() {
-        return totalIt;
-    }
-
-    public boolean solve() {
+    public boolean solveRow(int r) {
         final int N = getN();
         Queen q = queens[currentQI];
         while (true) {
-            if (moveQueenToFreeRow(q, q.getR()+1)) {
+            if (moveQueenToFreeRow(q, q.getR() + 1)) {
                 if (currentQI == (N - 1))
                     break; // we found a solution
                 // move to the next queen
@@ -97,15 +96,28 @@ public class Solver {
                 // backtracking //
                 // remove this queen from the board
                 q.moveToRow(-1);
-                if (currentQI == 0) {
-                    // if this is the first queen, we can't iterate anymore, we've found all the solutions
-                    return false;
-                }
                 // move to the previous queen
                 q = queens[--currentQI];
+                if (currentQI == 0) {
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+    public boolean solve() {
+        final int N = getN();
+        while (true) {
+            if (solveRow(currentRow)) {
+                return true;
+            }
+            ++currentRow;
+            startRow(currentRow);
+            if (currentRow >= N) {
+                return false;
+            }
+        }
     }
 
     public String toString(boolean abPrintGrid) {
