@@ -2,7 +2,7 @@
 
 An iterative solver that solves the N queens problem as defined on Wikipedia: https://en.wikipedia.org/wiki/Eight_queens_puzzle.
 
-Use gradle to build and run. There's also an IntelliJ project.
+Requires Java 1.7, use gradle to build and run. There's also an IntelliJ project.
 
 ## To build and run main
 ```
@@ -16,7 +16,7 @@ Use gradle to build and run. There's also an IntelliJ project.
 
 ## Benchmark of the concurrent implementation
 
-Times includes the gradle runtime, its really meant mostly to check that the
+Timings include the gradle runtime, its really meant mostly to check that the
 concurrent implementation actually does something useful.
 
 All run on macOS, best of 3 runs.
