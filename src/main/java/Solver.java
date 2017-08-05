@@ -35,6 +35,10 @@ public class Solver {
         resetSolver(0);
     }
 
+    /**
+     * Start solving a row. Use directly if you want the solver to only solve
+     * the solutions linked to a particular row/col0.
+     */
     public void startRow(int r) {
         currentRow = r;
         currentQI = 1;
@@ -45,16 +49,15 @@ public class Solver {
     }
 
     /**
-     * Get the number of iterations performed by the solver so far.
-     * An iteration is defined as one 'hasCollision' check.
+     * Get the number of iterations performed by the solver so far.  An
+     * iteration is defined as 'one hasCollision' check.
      */
     public int getTotalIt() {
         return totalIt;
     }
 
     /**
-     * Returns true if this queens collide with any queen in aQueens in the
-     * [aFrom,aTo] range.
+     * Returns true if aQ collide with any queen in the [aFrom,aTo] range.
      */
     public boolean hasCollision(Queen aQ, int aFrom, int aTo) {
         assert (aFrom >= 0);
@@ -72,7 +75,8 @@ public class Solver {
     public boolean moveQueenToFreeRow(Queen q, int startRow) {
         final int lastColToCheck = q.getC() - 1;
         assert (lastColToCheck >= 0);
-        // TODO: Here we could skip at least 3 collision check by checking the immediate left column directly first.
+        // TODO: Here we could skip at least 3 collision checks by checking
+        //       the immediate left column directly first.
         for (int r = startRow; r < getN(); ++r) {
             q.moveToRow(r);
             ++totalIt;
@@ -88,8 +92,10 @@ public class Solver {
         Queen q = queens[currentQI];
         while (true) {
             if (moveQueenToFreeRow(q, q.getR() + 1)) {
-                if (currentQI == (N - 1))
-                    break; // we found a solution
+                if (currentQI == (N - 1)) {
+					// we found a solution
+                    break;
+				}
                 // move to the next queen
                 q = queens[++currentQI];
             } else {
