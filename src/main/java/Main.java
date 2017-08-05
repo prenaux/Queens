@@ -1,7 +1,7 @@
 
 public class Main {
     public static void main(String[] args) {
-        final int N = 4;
+        final int N = 8;
 
         System.out.println("Hello Queens!");
         System.out.println("Solving for N = " + N);

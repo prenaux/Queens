@@ -61,11 +61,20 @@ public class Solver {
         return false;
     }
 
-    private int totalIt = 0;
+    private int currentQI = 0;
 
-    public void resetTotalIt() {
+    /**
+     * Reset the solver to restart from the begining.
+     */
+    public void resetSolver() {
+        currentQI = 0;
         totalIt = 0;
+        for (Queen q : queens) {
+            q.moveToRow(-1);
+        }
     }
+
+    private int totalIt = 0;
 
     /**
      * Get the number of iterations performed by the solver so far.
@@ -77,7 +86,6 @@ public class Solver {
 
     public boolean solve() {
         final int N = getN();
-        int currentQI = 0;
         Queen q = queens[currentQI];
         while (true) {
             if (moveQueenToFreeRow(q, q.getR()+1)) {
