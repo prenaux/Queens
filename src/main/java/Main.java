@@ -9,7 +9,7 @@ public class Main extends AbstractActor {
 
     public static void main(String[] args) {
         final int threads = Runtime.getRuntime().availableProcessors();
-        final int N = 8;
+        final int N = 16;
         // Don't print solutions above N=10-ish since they are so many that
         // most of the time spent is to print.
         final boolean printSolutions = (N <= 12) ? true : false;

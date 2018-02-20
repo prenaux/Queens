@@ -27,10 +27,10 @@ public class SolutionHandler extends AbstractActor {
     }
 
     static public class MsgSolverDone {
-        public final int numSolutions;
-        public final int numIt;
+        public final long numSolutions;
+        public final long numIt;
 
-        public MsgSolverDone(int aNumSolutions, int aNumIt) {
+        public MsgSolverDone(long aNumSolutions, long aNumIt) {
             numSolutions = aNumSolutions;
             numIt = aNumIt;
         }
@@ -39,9 +39,9 @@ public class SolutionHandler extends AbstractActor {
     static public class MsgFoundAll {
     }
 
-    private int numPrintedSolutions = 0;
-    private int numSolutions = 0;
-    private int numIt = 0;
+    private long numPrintedSolutions = 0;
+    private long numSolutions = 0;
+    private long numIt = 0;
 
     static private DeferredObject isDone = new DeferredObject();
     static public void waitDone() throws InterruptedException {
